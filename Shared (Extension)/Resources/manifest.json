@@ -4,7 +4,7 @@
 
     "name": "__MSG_extension_name__",
     "description": "__MSG_extension_description__",
-    "version": "1.0",
+    "version": "1.1.2",
 
     "icons": {
         "48": "images/icon-48.png",
@@ -14,7 +14,16 @@
         "512": "images/icon-512.png"
     },
 
+    "background": {
+        "service_worker": "background.js"
+    },
+
     "content_scripts": [{
+        "js": [ "bootstrap.js" ],
+        "matches": [ "https://www.netflix.com/*" ],
+        "run_at": "document_start",
+        "all_frames": false
+    }, {
         "js": [
             "subtitle-parser.js",
             "subtitle-detector.js",
@@ -39,5 +48,5 @@
     },
 
     "host_permissions": [ "https://www.netflix.com/*" ],
-    "permissions": [ "storage" ]
+    "permissions": [ "storage", "scripting" ]
 }

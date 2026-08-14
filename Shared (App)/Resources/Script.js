@@ -2,13 +2,7 @@ function postToHost(message) {
     window.webkit?.messageHandlers?.controller?.postMessage(message);
 }
 
-function show(platform, enabled, useSettingsInsteadOfPreferences) {
-    document.body.classList.add(`platform-${platform}`);
-
-    if (useSettingsInsteadOfPreferences) {
-        document.querySelector(".platform-mac.open-preferences").innerText = "Quit and Open Safari Settings…";
-    }
-
+function show(enabled) {
     if (typeof enabled === "boolean") {
         document.body.classList.toggle("state-on", enabled);
         document.body.classList.toggle("state-off", !enabled);

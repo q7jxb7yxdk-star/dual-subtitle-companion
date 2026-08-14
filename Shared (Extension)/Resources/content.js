@@ -9,6 +9,8 @@
     const ENABLED_STORAGE_KEY = "dualSubtitlesEnabled";
     const REVISION_STORAGE_KEY = "dualSubtitlesRevision";
     const NATIVE_TRACK_STORAGE_KEY = "nativeSubtitleTrackId";
+    const MAX_CONTROLLED_PROBE_ATTEMPTS = 3;
+    const CONTROLLED_PROBE_RETRY_DELAY = 2000;
     const state = {
         bridgeActive: false,
         tracks: [],
@@ -16,12 +18,28 @@
         traditionalChinese: null,
         controlledProbeRequested: false,
         controlledProbeRestored: false,
+        controlledProbeAttempts: 0,
+        controlledProbeRetryTimer: null,
         nativeSubtitleDisableRequested: false,
+        nativeSubtitleState: "unknown",
         dualSubtitlesEnabled: false,
         enabledRevision: 0,
         enabledSettingLoaded: false,
         savedNativeTrackId: ""
     };
+
+    function clearControlledProbeRetry() {
+        if (state.controlledProbeRetryTimer !== null) clearTimeout(state.controlledProbeRetryTimer);
+        state.controlledProbeRetryTimer = null;
+    }
+
+    function resetControlledProbeCycle() {
+        clearControlledProbeRetry();
+        state.controlledProbeRequested = false;
+        state.controlledProbeRestored = false;
+        state.controlledProbeAttempts = 0;
+        state.nativeSubtitleDisableRequested = false;
+    }
 
     function fetchableTrackURL(value) {
         if (typeof value !== "string" || !value.trim()) return null;
@@ -51,11 +69,7 @@
         state.dualSubtitlesEnabled = nextEnabled;
         state.enabledRevision = Math.max(state.enabledRevision, nextRevision);
         state.enabledSettingLoaded = true;
-        if (nextEnabled && !wasEnabled) {
-            state.controlledProbeRequested = false;
-            state.controlledProbeRestored = false;
-            state.nativeSubtitleDisableRequested = false;
-        }
+        if (nextEnabled && !wasEnabled) resetControlledProbeCycle();
         applyEnabledState();
         return true;
     }
@@ -73,6 +87,7 @@
             maybeStartControlledProbe();
             reconcileControlledProbe();
         } else {
+            clearControlledProbeRetry();
             state.nativeSubtitleDisableRequested = false;
             state.controlledProbeRequested = false;
         }
@@ -134,9 +149,22 @@
     }
 
     function maybeStartControlledProbe() {
-        if (!state.enabledSettingLoaded || !state.dualSubtitlesEnabled || state.controlledProbeRequested || !state.bridgeActive || !state.english || !state.traditionalChinese) return;
+        if (!state.enabledSettingLoaded || !state.dualSubtitlesEnabled || state.controlledProbeRequested || state.controlledProbeAttempts >= MAX_CONTROLLED_PROBE_ATTEMPTS || !state.bridgeActive || !state.english || !state.traditionalChinese) return;
+        clearControlledProbeRetry();
         state.controlledProbeRequested = true;
+        state.controlledProbeRestored = false;
+        state.controlledProbeAttempts += 1;
         window.postMessage({ source: EXTENSION_SOURCE, type: "start-controlled-probe" }, location.origin);
+    }
+
+    function scheduleControlledProbeRetry() {
+        if (!state.dualSubtitlesEnabled || (state.english?.cues?.length && state.traditionalChinese?.cues?.length) || state.controlledProbeAttempts >= MAX_CONTROLLED_PROBE_ATTEMPTS) return;
+        clearControlledProbeRetry();
+        state.controlledProbeRetryTimer = setTimeout(() => {
+            state.controlledProbeRetryTimer = null;
+            state.controlledProbeRequested = false;
+            maybeStartControlledProbe();
+        }, CONTROLLED_PROBE_RETRY_DELAY);
     }
 
     window.addEventListener("message", (event) => {
@@ -155,7 +183,10 @@
                 applyDetectorResult(window.DualSubtitleDetector.ingestPlayerTracks(payload.tracks));
             }
         } else if (payload.type === "controlled-probe") {
-            if (payload.phase === "restored") state.controlledProbeRestored = true;
+            if (payload.phase === "restored") {
+                state.controlledProbeRestored = true;
+                scheduleControlledProbeRetry();
+            }
             if (payload.phase === "selected" && payload.captureId && payload.track?.trackId) {
                 const cached = state.tracks.find((track) => track.trackId === payload.track.trackId && track.cues?.length);
                 if (cached) {
@@ -214,6 +245,9 @@
 
     function settleToggleWaiters(payload) {
         const successEnabled = payload.status === "disabled" ? true : (payload.status === "restored" ? false : null);
+        if (payload.status === "disabled") state.nativeSubtitleState = "disabled";
+        else if (payload.status === "restored") state.nativeSubtitleState = "restored";
+        else if (payload.status === "failed" || payload.status === "restore-failed") state.nativeSubtitleState = "unknown";
         for (const waiter of [...toggleWaiters]) {
             if (waiter.revision < state.enabledRevision) {
                 clearTimeout(waiter.timer);
@@ -227,10 +261,18 @@
         }
     }
 
+    function toggleAlreadySatisfied(enabled) {
+        return enabled ? state.nativeSubtitleState === "disabled" : state.nativeSubtitleState === "restored";
+    }
+
     browser.runtime.onMessage.addListener((message) => {
+        if (message?.type === "dual-subtitle-content-ready") return Promise.resolve({ ready: true });
         if (message?.type !== "set-dual-subtitles-enabled") return undefined;
         const revision = Number(message.revision) || Date.now();
         setEnabledState(message.enabled === true, revision);
+        if (toggleAlreadySatisfied(message.enabled === true)) {
+            return Promise.resolve({ ok: true, enabled: message.enabled === true, error: null });
+        }
         return waitForNativeSubtitleResult(message.enabled === true, revision);
     });
 

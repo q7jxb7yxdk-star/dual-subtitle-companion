@@ -7,15 +7,8 @@
 
 import Foundation
 import WebKit
-
-#if os(iOS)
-import UIKit
-typealias PlatformViewController = UIViewController
-#elseif os(macOS)
 import Cocoa
 import SafariServices
-typealias PlatformViewController = NSViewController
-#endif
 
 let extensionBundleIdentifier = "com.sunny.dual-subtitle-companion.extension"
 let allowedExternalURLs: Set<String> = [
@@ -24,7 +17,7 @@ let allowedExternalURLs: Set<String> = [
     "https://github.com/q7jxb7yxdk-star/dual-subtitle-companion/blob/main/THIRD_PARTY_NOTICES.md"
 ]
 
-class ViewController: PlatformViewController, WKNavigationDelegate, WKScriptMessageHandler {
+class ViewController: NSViewController, WKNavigationDelegate, WKScriptMessageHandler {
 
     @IBOutlet var webView: WKWebView!
 
@@ -39,11 +32,6 @@ class ViewController: PlatformViewController, WKNavigationDelegate, WKScriptMess
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-#if os(iOS)
-        webView.evaluateJavaScript("show('ios')")
-#elseif os(macOS)
-        webView.evaluateJavaScript("show('mac')")
-
         SFSafariExtensionManager.getStateOfSafariExtension(withIdentifier: extensionBundleIdentifier) { [weak self] state, error in
             if let error {
                 self?.displayError("Unable to read the Safari extension status: \(error.localizedDescription)")
@@ -55,14 +43,9 @@ class ViewController: PlatformViewController, WKNavigationDelegate, WKScriptMess
             }
 
             DispatchQueue.main.async {
-                if #available(macOS 13, *) {
-                    self?.webView.evaluateJavaScript("show('mac', \(state.isEnabled), true)")
-                } else {
-                    self?.webView.evaluateJavaScript("show('mac', \(state.isEnabled), false)")
-                }
+                self?.webView.evaluateJavaScript("show(\(state.isEnabled))")
             }
         }
-#endif
     }
 
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
@@ -76,7 +59,6 @@ class ViewController: PlatformViewController, WKNavigationDelegate, WKScriptMess
 
         switch action {
         case "open-preferences":
-#if os(macOS)
             SFSafariApplication.showPreferencesForExtension(withIdentifier: extensionBundleIdentifier) { [weak self] error in
                 if let error {
                     self?.displayError("Unable to open Safari Settings: \(error.localizedDescription)")
@@ -87,9 +69,6 @@ class ViewController: PlatformViewController, WKNavigationDelegate, WKScriptMess
                     NSApp.terminate(self)
                 }
             }
-#else
-            displayError("Open Safari Settings manually to manage this extension.")
-#endif
         case "open-url":
             guard let value = body["url"] as? String else {
                 displayError("The requested link is invalid.")
@@ -107,17 +86,9 @@ class ViewController: PlatformViewController, WKNavigationDelegate, WKScriptMess
             return
         }
 
-#if os(iOS)
-        UIApplication.shared.open(url, options: [:]) { [weak self] opened in
-            if !opened {
-                self?.displayError("Unable to open the requested link. Check your network connection and browser settings.")
-            }
-        }
-#elseif os(macOS)
         if !NSWorkspace.shared.open(url) {
             displayError("Unable to open the requested link. Check your network connection and default browser settings.")
         }
-#endif
     }
 
     private func displayError(_ message: String) {
