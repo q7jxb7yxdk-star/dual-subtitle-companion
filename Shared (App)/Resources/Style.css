@@ -1,0 +1,149 @@
+* {
+    box-sizing: border-box;
+    -webkit-user-drag: none;
+}
+
+:root {
+    color-scheme: light dark;
+    font: -apple-system-body;
+}
+
+html,
+body {
+    min-height: 100%;
+    margin: 0;
+}
+
+body {
+    overflow: auto;
+    background: Canvas;
+    color: CanvasText;
+}
+
+main {
+    width: min(680px, 100%);
+    margin: 0 auto;
+    padding: 28px;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+header img {
+    flex: 0 0 auto;
+    border-radius: 20px;
+}
+
+h1 {
+    margin: 0 0 5px;
+    font: -apple-system-title1;
+}
+
+.subtitle {
+    margin: 0;
+    color: secondaryLabelColor;
+}
+
+section {
+    margin-top: 16px;
+    padding: 18px;
+    border: 1px solid separatorColor;
+    border-radius: 12px;
+    background: controlBackgroundColor;
+}
+
+h2 {
+    margin: 0 0 10px;
+    font: -apple-system-headline;
+}
+
+p,
+li {
+    line-height: 1.45;
+}
+
+ol,
+ul {
+    margin: 8px 0 0;
+    padding-left: 24px;
+}
+
+li + li {
+    margin-top: 6px;
+}
+
+code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+button {
+    min-height: 30px;
+    padding: 5px 12px;
+    font: inherit;
+}
+
+.button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.error-message {
+    margin: 16px 0 0;
+    padding: 12px 14px;
+    border: 1px solid systemRedColor;
+    border-radius: 10px;
+    background: rgba(255, 59, 48, 0.12);
+    color: systemRedColor;
+    line-height: 1.4;
+}
+
+.status-good {
+    color: systemGreenColor;
+}
+
+.status-warning {
+    color: systemOrangeColor;
+}
+
+.disclaimer {
+    margin: 14px 0 0;
+    color: secondaryLabelColor;
+    font: -apple-system-caption1;
+}
+
+body:not(.platform-mac, .platform-ios) :is(.platform-mac, .platform-ios),
+body.platform-ios .platform-mac,
+body.platform-mac .platform-ios {
+    display: none;
+}
+
+body:not(.state-on, .state-off) :is(.state-on, .state-off),
+body.state-on :is(.state-off, .state-unknown),
+body.state-off :is(.state-on, .state-unknown) {
+    display: none;
+}
+
+@media (max-width: 520px) {
+    main {
+        padding: 20px;
+    }
+
+    header {
+        align-items: flex-start;
+    }
+
+    header img {
+        width: 72px;
+        height: 72px;
+        border-radius: 16px;
+    }
+
+    .button-row {
+        flex-direction: column;
+    }
+}

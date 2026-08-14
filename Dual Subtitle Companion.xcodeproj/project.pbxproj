@@ -1,0 +1,949 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		96A5D547302DEC5800D418F8 /* Dual Subtitle Companion Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 96A5D546302DEC5800D418F8 /* Dual Subtitle Companion Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		96A5D551302DEC5800D418F8 /* Dual Subtitle Companion Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 96A5D550302DEC5800D418F8 /* Dual Subtitle Companion Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		96A5D548302DEC5800D418F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 96A5D50D302DEC5700D418F8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 96A5D545302DEC5800D418F8;
+			remoteInfo = "Dual Subtitle Companion Extension (iOS)";
+		};
+		96A5D552302DEC5800D418F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 96A5D50D302DEC5700D418F8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 96A5D54F302DEC5800D418F8;
+			remoteInfo = "Dual Subtitle Companion Extension (macOS)";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		96A5D579302DEC5800D418F8 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				96A5D547302DEC5800D418F8 /* Dual Subtitle Companion Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		96A5D583302DEC5800D418F8 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				96A5D551302DEC5800D418F8 /* Dual Subtitle Companion Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		96A5D529302DEC5800D418F8 /* Dual Subtitle Companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dual Subtitle Companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		96A5D53B302DEC5800D418F8 /* Dual Subtitle Companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dual Subtitle Companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		96A5D546302DEC5800D418F8 /* Dual Subtitle Companion Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Dual Subtitle Companion Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		96A5D550302DEC5800D418F8 /* Dual Subtitle Companion Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Dual Subtitle Companion Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		96A5D574302DEC5800D418F8 /* Exceptions for "Shared (App)" folder in "Dual Subtitle Companion (iOS)" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"/Localized: Resources/Main.html",
+				Assets.xcassets,
+				Resources/Icon.png,
+				Resources/Script.js,
+				Resources/Style.css,
+				ViewController.swift,
+			);
+			target = 96A5D528302DEC5800D418F8 /* Dual Subtitle Companion (iOS) */;
+		};
+		96A5D578302DEC5800D418F8 /* Exceptions for "iOS (Extension)" folder in "Dual Subtitle Companion Extension (iOS)" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 96A5D545302DEC5800D418F8 /* Dual Subtitle Companion Extension (iOS) */;
+		};
+		96A5D57D302DEC5800D418F8 /* Exceptions for "iOS (App)" folder in "Dual Subtitle Companion (iOS)" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 96A5D528302DEC5800D418F8 /* Dual Subtitle Companion (iOS) */;
+		};
+		96A5D57E302DEC5800D418F8 /* Exceptions for "Shared (App)" folder in "Dual Subtitle Companion (macOS)" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"/Localized: Resources/Main.html",
+				Assets.xcassets,
+				Resources/Icon.png,
+				Resources/Script.js,
+				Resources/Style.css,
+				ViewController.swift,
+			);
+			target = 96A5D53A302DEC5800D418F8 /* Dual Subtitle Companion (macOS) */;
+		};
+		96A5D582302DEC5800D418F8 /* Exceptions for "macOS (Extension)" folder in "Dual Subtitle Companion Extension (macOS)" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 96A5D54F302DEC5800D418F8 /* Dual Subtitle Companion Extension (macOS) */;
+		};
+		96A5D587302DEC5800D418F8 /* Exceptions for "Shared (Extension)" folder in "Dual Subtitle Companion Extension (iOS)" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Resources/_locales,
+				Resources/content.css,
+				Resources/content.js,
+				Resources/images,
+				Resources/manifest.json,
+				"Resources/playback-player.js",
+				"Resources/page-bridge.js",
+				Resources/popup.css,
+				Resources/popup.html,
+				Resources/popup.js,
+				"Resources/subtitle-detector.js",
+				"Resources/subtitle-parser.js",
+				"Resources/subtitle-renderer.js",
+				SafariWebExtensionHandler.swift,
+			);
+			target = 96A5D545302DEC5800D418F8 /* Dual Subtitle Companion Extension (iOS) */;
+		};
+		96A5D588302DEC5800D418F8 /* Exceptions for "Shared (Extension)" folder in "Dual Subtitle Companion Extension (macOS)" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Resources/_locales,
+				Resources/content.css,
+				Resources/content.js,
+				Resources/images,
+				Resources/manifest.json,
+				"Resources/playback-player.js",
+				"Resources/page-bridge.js",
+				Resources/popup.css,
+				Resources/popup.html,
+				Resources/popup.js,
+				"Resources/subtitle-detector.js",
+				"Resources/subtitle-parser.js",
+				"Resources/subtitle-renderer.js",
+				SafariWebExtensionHandler.swift,
+			);
+			target = 96A5D54F302DEC5800D418F8 /* Dual Subtitle Companion Extension (macOS) */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		96A5D511302DEC5700D418F8 /* Shared (App) */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				96A5D574302DEC5800D418F8 /* Exceptions for "Shared (App)" folder in "Dual Subtitle Companion (iOS)" target */,
+				96A5D57E302DEC5800D418F8 /* Exceptions for "Shared (App)" folder in "Dual Subtitle Companion (macOS)" target */,
+			);
+			path = "Shared (App)";
+			sourceTree = "<group>";
+		};
+		96A5D51A302DEC5800D418F8 /* Shared (Extension) */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				96A5D587302DEC5800D418F8 /* Exceptions for "Shared (Extension)" folder in "Dual Subtitle Companion Extension (iOS)" target */,
+				96A5D588302DEC5800D418F8 /* Exceptions for "Shared (Extension)" folder in "Dual Subtitle Companion Extension (macOS)" target */,
+			);
+			explicitFolders = (
+				Resources/_locales,
+				Resources/images,
+			);
+			path = "Shared (Extension)";
+			sourceTree = "<group>";
+		};
+		96A5D52B302DEC5800D418F8 /* iOS (App) */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				96A5D57D302DEC5800D418F8 /* Exceptions for "iOS (App)" folder in "Dual Subtitle Companion (iOS)" target */,
+			);
+			path = "iOS (App)";
+			sourceTree = "<group>";
+		};
+		96A5D53C302DEC5800D418F8 /* macOS (App) */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "macOS (App)";
+			sourceTree = "<group>";
+		};
+		96A5D54A302DEC5800D418F8 /* iOS (Extension) */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				96A5D578302DEC5800D418F8 /* Exceptions for "iOS (Extension)" folder in "Dual Subtitle Companion Extension (iOS)" target */,
+			);
+			path = "iOS (Extension)";
+			sourceTree = "<group>";
+		};
+		96A5D554302DEC5800D418F8 /* macOS (Extension) */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				96A5D582302DEC5800D418F8 /* Exceptions for "macOS (Extension)" folder in "Dual Subtitle Companion Extension (macOS)" target */,
+			);
+			path = "macOS (Extension)";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		96A5D526302DEC5800D418F8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		96A5D538302DEC5800D418F8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		96A5D543302DEC5800D418F8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		96A5D54D302DEC5800D418F8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		96A5D50C302DEC5700D418F8 = {
+			isa = PBXGroup;
+			children = (
+				96A5D511302DEC5700D418F8 /* Shared (App) */,
+				96A5D51A302DEC5800D418F8 /* Shared (Extension) */,
+				96A5D52B302DEC5800D418F8 /* iOS (App) */,
+				96A5D53C302DEC5800D418F8 /* macOS (App) */,
+				96A5D54A302DEC5800D418F8 /* iOS (Extension) */,
+				96A5D554302DEC5800D418F8 /* macOS (Extension) */,
+				96A5D52A302DEC5800D418F8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		96A5D52A302DEC5800D418F8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				96A5D529302DEC5800D418F8 /* Dual Subtitle Companion.app */,
+				96A5D53B302DEC5800D418F8 /* Dual Subtitle Companion.app */,
+				96A5D546302DEC5800D418F8 /* Dual Subtitle Companion Extension.appex */,
+				96A5D550302DEC5800D418F8 /* Dual Subtitle Companion Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		96A5D528302DEC5800D418F8 /* Dual Subtitle Companion (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 96A5D57A302DEC5800D418F8 /* Build configuration list for PBXNativeTarget "Dual Subtitle Companion (iOS)" */;
+			buildPhases = (
+				96A5D525302DEC5800D418F8 /* Sources */,
+				96A5D526302DEC5800D418F8 /* Frameworks */,
+				96A5D527302DEC5800D418F8 /* Resources */,
+				96A5D579302DEC5800D418F8 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				96A5D549302DEC5800D418F8 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				96A5D52B302DEC5800D418F8 /* iOS (App) */,
+			);
+			name = "Dual Subtitle Companion (iOS)";
+			packageProductDependencies = (
+			);
+			productName = "Dual Subtitle Companion (iOS)";
+			productReference = 96A5D529302DEC5800D418F8 /* Dual Subtitle Companion.app */;
+			productType = "com.apple.product-type.application";
+		};
+		96A5D53A302DEC5800D418F8 /* Dual Subtitle Companion (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 96A5D584302DEC5800D418F8 /* Build configuration list for PBXNativeTarget "Dual Subtitle Companion (macOS)" */;
+			buildPhases = (
+				96A5D537302DEC5800D418F8 /* Sources */,
+				96A5D538302DEC5800D418F8 /* Frameworks */,
+				96A5D539302DEC5800D418F8 /* Resources */,
+				96A5D583302DEC5800D418F8 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				96A5D553302DEC5800D418F8 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				96A5D53C302DEC5800D418F8 /* macOS (App) */,
+			);
+			name = "Dual Subtitle Companion (macOS)";
+			packageProductDependencies = (
+			);
+			productName = "Dual Subtitle Companion (macOS)";
+			productReference = 96A5D53B302DEC5800D418F8 /* Dual Subtitle Companion.app */;
+			productType = "com.apple.product-type.application";
+		};
+		96A5D545302DEC5800D418F8 /* Dual Subtitle Companion Extension (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 96A5D575302DEC5800D418F8 /* Build configuration list for PBXNativeTarget "Dual Subtitle Companion Extension (iOS)" */;
+			buildPhases = (
+				96A5D542302DEC5800D418F8 /* Sources */,
+				96A5D543302DEC5800D418F8 /* Frameworks */,
+				96A5D544302DEC5800D418F8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				96A5D54A302DEC5800D418F8 /* iOS (Extension) */,
+			);
+			name = "Dual Subtitle Companion Extension (iOS)";
+			packageProductDependencies = (
+			);
+			productName = "Dual Subtitle Companion Extension (iOS)";
+			productReference = 96A5D546302DEC5800D418F8 /* Dual Subtitle Companion Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		96A5D54F302DEC5800D418F8 /* Dual Subtitle Companion Extension (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 96A5D57F302DEC5800D418F8 /* Build configuration list for PBXNativeTarget "Dual Subtitle Companion Extension (macOS)" */;
+			buildPhases = (
+				96A5D54C302DEC5800D418F8 /* Sources */,
+				96A5D54D302DEC5800D418F8 /* Frameworks */,
+				96A5D54E302DEC5800D418F8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				96A5D554302DEC5800D418F8 /* macOS (Extension) */,
+			);
+			name = "Dual Subtitle Companion Extension (macOS)";
+			packageProductDependencies = (
+			);
+			productName = "Dual Subtitle Companion Extension (macOS)";
+			productReference = 96A5D550302DEC5800D418F8 /* Dual Subtitle Companion Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		96A5D50D302DEC5700D418F8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2660;
+				LastUpgradeCheck = 2660;
+				TargetAttributes = {
+					96A5D528302DEC5800D418F8 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					96A5D53A302DEC5800D418F8 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					96A5D545302DEC5800D418F8 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					96A5D54F302DEC5800D418F8 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+				};
+			};
+			buildConfigurationList = 96A5D510302DEC5700D418F8 /* Build configuration list for PBXProject "Dual Subtitle Companion" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 96A5D50C302DEC5700D418F8;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 96A5D52A302DEC5800D418F8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				96A5D528302DEC5800D418F8 /* Dual Subtitle Companion (iOS) */,
+				96A5D53A302DEC5800D418F8 /* Dual Subtitle Companion (macOS) */,
+				96A5D545302DEC5800D418F8 /* Dual Subtitle Companion Extension (iOS) */,
+				96A5D54F302DEC5800D418F8 /* Dual Subtitle Companion Extension (macOS) */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		96A5D527302DEC5800D418F8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		96A5D539302DEC5800D418F8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		96A5D544302DEC5800D418F8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		96A5D54E302DEC5800D418F8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		96A5D525302DEC5800D418F8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		96A5D537302DEC5800D418F8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		96A5D542302DEC5800D418F8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		96A5D54C302DEC5800D418F8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		96A5D549302DEC5800D418F8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 96A5D545302DEC5800D418F8 /* Dual Subtitle Companion Extension (iOS) */;
+			targetProxy = 96A5D548302DEC5800D418F8 /* PBXContainerItemProxy */;
+		};
+		96A5D553302DEC5800D418F8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 96A5D54F302DEC5800D418F8 /* Dual Subtitle Companion Extension (macOS) */;
+			targetProxy = 96A5D552302DEC5800D418F8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		96A5D576302DEC5800D418F8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20260814;
+				DEVELOPMENT_TEAM = WX793X49GJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Dual Subtitle Companion Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1.1;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sunny.dual-subtitle-companion.extension";
+				PRODUCT_NAME = "Dual Subtitle Companion Extension";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		96A5D577302DEC5800D418F8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20260814;
+				DEVELOPMENT_TEAM = WX793X49GJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Dual Subtitle Companion Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1.1;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sunny.dual-subtitle-companion.extension";
+				PRODUCT_NAME = "Dual Subtitle Companion Extension";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		96A5D57B302DEC5800D418F8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20260814;
+				DEVELOPMENT_TEAM = WX793X49GJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Dual Subtitle Companion";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1.1;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sunny.dual-subtitle-companion";
+				PRODUCT_NAME = "Dual Subtitle Companion";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		96A5D57C302DEC5800D418F8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20260814;
+				DEVELOPMENT_TEAM = WX793X49GJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Dual Subtitle Companion";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1.1;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sunny.dual-subtitle-companion";
+				PRODUCT_NAME = "Dual Subtitle Companion";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		96A5D580302DEC5800D418F8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20260814;
+				DEVELOPMENT_TEAM = WX793X49GJ;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Dual Subtitle Companion Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.1.1;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sunny.dual-subtitle-companion.extension";
+				PRODUCT_NAME = "Dual Subtitle Companion Extension";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		96A5D581302DEC5800D418F8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20260814;
+				DEVELOPMENT_TEAM = WX793X49GJ;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Dual Subtitle Companion Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.1.1;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sunny.dual-subtitle-companion.extension";
+				PRODUCT_NAME = "Dual Subtitle Companion Extension";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		96A5D585302DEC5800D418F8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20260814;
+				DEVELOPMENT_TEAM = WX793X49GJ;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Dual Subtitle Companion";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.1.1;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sunny.dual-subtitle-companion";
+				PRODUCT_NAME = "Dual Subtitle Companion";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		96A5D586302DEC5800D418F8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20260814;
+				DEVELOPMENT_TEAM = WX793X49GJ;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Dual Subtitle Companion";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.1.1;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sunny.dual-subtitle-companion";
+				PRODUCT_NAME = "Dual Subtitle Companion";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		96A5D589302DEC5800D418F8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = WX793X49GJ;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		96A5D58A302DEC5800D418F8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = WX793X49GJ;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		96A5D510302DEC5700D418F8 /* Build configuration list for PBXProject "Dual Subtitle Companion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				96A5D589302DEC5800D418F8 /* Debug */,
+				96A5D58A302DEC5800D418F8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		96A5D575302DEC5800D418F8 /* Build configuration list for PBXNativeTarget "Dual Subtitle Companion Extension (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				96A5D576302DEC5800D418F8 /* Debug */,
+				96A5D577302DEC5800D418F8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		96A5D57A302DEC5800D418F8 /* Build configuration list for PBXNativeTarget "Dual Subtitle Companion (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				96A5D57B302DEC5800D418F8 /* Debug */,
+				96A5D57C302DEC5800D418F8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		96A5D57F302DEC5800D418F8 /* Build configuration list for PBXNativeTarget "Dual Subtitle Companion Extension (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				96A5D580302DEC5800D418F8 /* Debug */,
+				96A5D581302DEC5800D418F8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		96A5D584302DEC5800D418F8 /* Build configuration list for PBXNativeTarget "Dual Subtitle Companion (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				96A5D585302DEC5800D418F8 /* Debug */,
+				96A5D586302DEC5800D418F8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 96A5D50D302DEC5700D418F8 /* Project object */;
+}

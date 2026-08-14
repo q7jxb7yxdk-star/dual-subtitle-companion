@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../Style.css">
+    <script src="../Script.js" defer></script>
+</head>
+<body>
+    <main>
+        <header>
+            <img src="../Icon.png" width="96" height="96" alt="Dual Subtitle Companion icon">
+            <div>
+                <h1>Dual Subtitle Companion</h1>
+                <p class="subtitle">English and Traditional Chinese subtitles together in Safari.</p>
+            </div>
+        </header>
+
+        <p id="error-message" class="error-message" role="alert" aria-live="assertive" hidden></p>
+
+        <section aria-labelledby="status-heading">
+            <h2 id="status-heading">Extension status</h2>
+            <p class="platform-ios">Enable the Safari extension in Settings, then open a supported playback page.</p>
+            <p class="platform-mac state-unknown">Checking the Safari extension status…</p>
+            <p class="platform-mac state-on status-good">The Safari extension is enabled.</p>
+            <p class="platform-mac state-off status-warning">The Safari extension is disabled.</p>
+            <button class="platform-mac open-preferences" type="button">Quit and Open Safari Settings…</button>
+        </section>
+
+        <section aria-labelledby="usage-heading">
+            <h2 id="usage-heading">How to use</h2>
+            <ol>
+                <li>Enable Dual Subtitle Companion in Safari Settings → Extensions.</li>
+                <li>Allow access to <code>netflix.com</code>.</li>
+                <li>Open a playback page that offers both English and Traditional Chinese subtitles.</li>
+                <li>Click the extension button in the Safari toolbar.</li>
+                <li>Enable bilingual subtitles. Disable them to restore the previous website subtitle track.</li>
+            </ol>
+        </section>
+
+        <section aria-labelledby="requirements-heading">
+            <h2 id="requirements-heading">Requirements and limitations</h2>
+            <ul>
+                <li>Currently supported and tested only on macOS Safari.</li>
+                <li>A valid account and subscription for the supported service are required.</li>
+                <li>Subtitle availability varies by title, episode, profile, account language, and region.</li>
+                <li>The extension relies on an undocumented player implementation and may stop working after website updates.</li>
+                <li>Initial subtitle detection can take several seconds.</li>
+                <li>Safari native video fullscreen cannot display a webpage subtitle overlay.</li>
+                <li>The extension does not translate, download, export, or redistribute subtitles, video, or audio.</li>
+            </ul>
+        </section>
+
+        <section aria-labelledby="support-heading">
+            <h2 id="support-heading">Privacy, support, and notices</h2>
+            <div class="button-row">
+                <button type="button" data-external-url="https://github.com/q7jxb7yxdk-star/dual-subtitle-companion/blob/main/PRIVACY_POLICY.md">Privacy Policy</button>
+                <button type="button" data-external-url="https://github.com/q7jxb7yxdk-star/dual-subtitle-companion/issues">GitHub Issues</button>
+                <button type="button" data-external-url="https://github.com/q7jxb7yxdk-star/dual-subtitle-companion/blob/main/THIRD_PARTY_NOTICES.md">Third-Party Notices</button>
+            </div>
+            <p class="disclaimer">Independent, unofficial software. Not affiliated with, endorsed by, sponsored by, or approved by Netflix, Inc. or any other streaming service. Users are responsible for complying with applicable service terms and laws.</p>
+        </section>
+    </main>
+</body>
+</html>

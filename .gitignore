@@ -1,0 +1,48 @@
+# macOS and Xcode user state
+.DS_Store
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.xccheckout
+*.xcscmblueprint
+
+# Build, archive, signing, and exported products
+build/
+release/
+*.app
+*.appex
+*.ipa
+*.dSYM
+*.dSYM.zip
+*.xcarchive
+*.pkg
+*.dmg
+*.mobileprovision
+ExportOptions.plist
+
+# Subtitle files and extracted timed text
+*.srt
+*.vtt
+*.webvtt
+*.ttml
+*.dfxp
+*.ass
+*.ssa
+subtitle-dumps/
+timed-text-dumps/
+
+# Network captures and response dumps
+*.har
+*.pcap
+*.pcapng
+network-captures/
+response-dumps/
+responses/
+captures/
+
+# Local secrets and environment files
+.env
+.env.*
+*.p12
+*.cer
+*.key

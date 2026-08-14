@@ -1,0 +1,10 @@
+{
+    "extension_name": {
+        "message": "Dual Subtitle Companion",
+        "description": "The display name for the extension."
+    },
+    "extension_description": {
+        "message": "Displays English and Traditional Chinese subtitle tracks together on supported playback pages.",
+        "description": "Description of what the extension does."
+    }
+}

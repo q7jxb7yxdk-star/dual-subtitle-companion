@@ -1,0 +1,38 @@
+#dual-subtitle-companion-overlay {
+    position: fixed !important;
+    z-index: 2147483646 !important;
+    left: 50% !important;
+    bottom: 9vh !important;
+    width: min(92vw, 1100px) !important;
+    transform: translateX(-50%) !important;
+    box-sizing: border-box !important;
+    padding: 8px 16px !important;
+    pointer-events: none !important;
+    color: #fff !important;
+    text-align: center !important;
+    text-shadow: 0 2px 4px #000, 0 0 3px #000 !important;
+}
+
+#dual-subtitle-companion-overlay[hidden],
+#dual-subtitle-companion-overlay .dsc-subtitle-line[hidden] {
+    display: none !important;
+}
+
+#dual-subtitle-companion-overlay .dsc-subtitle-line {
+    white-space: pre-line !important;
+    overflow-wrap: anywhere !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif !important;
+    font-weight: 600 !important;
+}
+
+#dual-subtitle-companion-overlay .dsc-subtitle-english {
+    font-size: clamp(20px, 2.35vw, 36px) !important;
+    line-height: 1.2 !important;
+}
+
+#dual-subtitle-companion-overlay .dsc-subtitle-traditional-chinese {
+    margin-top: 5px !important;
+    color: #ffe66d !important;
+    font-size: clamp(20px, 2.35vw, 36px) !important;
+    line-height: 1.25 !important;
+}

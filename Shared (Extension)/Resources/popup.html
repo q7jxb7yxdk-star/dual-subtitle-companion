@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="popup.css">
+    <script type="module" src="popup.js"></script>
+</head>
+<body>
+    <main>
+        <strong>Dual Subtitle Companion</strong>
+        <label class="setting-row" for="dual-subtitles-enabled">
+            <span>啟用雙語字幕</span>
+            <input id="dual-subtitles-enabled" type="checkbox" disabled>
+        </label>
+        <p class="hint">開啟時暫停網站原生字幕；關閉時恢復原本字幕。</p>
+        <p id="toggle-status" class="status" role="status" aria-live="polite"></p>
+    </main>
+</body>
+</html>
