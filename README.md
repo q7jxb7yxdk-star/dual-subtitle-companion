@@ -27,7 +27,7 @@ There is no production debug panel, options page, analytics service, translation
 
 ### To use the extension
 
-- macOS 13 or later.
+- macOS 26.0 or later.
 - Safari with the extension enabled and access granted to `netflix.com`.
 - A valid account and subscription for the supported service.
 - A title that offers both English and Traditional Chinese subtitles.
@@ -46,7 +46,7 @@ There are no npm packages, Swift Packages, CocoaPods, Python packages, environme
 
 ### Install a signed release
 
-The latest published binary is available from [GitHub Releases](https://github.com/q7jxb7yxdk-star/dual-subtitle-companion/releases). Release `v1.1.1` is distributed as a Developer ID-signed and Apple-notarized Universal DMG.
+The latest published binary is available from [GitHub Releases](https://github.com/q7jxb7yxdk-star/dual-subtitle-companion/releases). Release `v1.1.2` is distributed as a Developer ID-signed and Apple-notarized Universal DMG.
 
 1. Download `Dual-Subtitle-Companion-<version>.dmg`.
 2. Open the DMG and drag **Dual Subtitle Companion** to **Applications**.
@@ -142,7 +142,7 @@ node --check "Shared (App)/Resources/Script.js"
 
 The repository has no configured formatter, linter, automated test target, or CI workflow. Runtime validation is manual and requires a supported playback title.
 
-The current `scripts/build-notarized-dmg.sh` does not yet automate the complete inner-app notarization and stapling sequence used for the published `v1.1.1` DMG. Treat the script as incomplete release tooling until that gap is fixed; see the technical documentation.
+The `scripts/build-notarized-dmg.sh` workflow validates version and bundle metadata, creates a Developer ID archive, notarizes and staples the exported app, builds the DMG from that stapled app, notarizes and staples the DMG, remounts it, and verifies the contained app before producing a SHA-256 checksum.
 
 ## Known limitations
 

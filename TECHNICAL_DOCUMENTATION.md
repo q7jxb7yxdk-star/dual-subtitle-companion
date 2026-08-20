@@ -109,7 +109,7 @@ Shared (Extension)/
 macOS (Extension)/Info.plist              Safari Web Extension entry point
 scripts/
   ExportOptions-DeveloperID.plist         Developer ID export settings
-  build-notarized-dmg.sh                  Partially automated release workflow
+  build-notarized-dmg.sh                  App and DMG signing/notarization workflow
 
 README.md                                 Developer and user entry point
 PRIVACY_POLICY.md                         Local data-processing policy
@@ -381,9 +381,9 @@ The extension depends on a private, undocumented playback-page object and the ti
 | --- | --- |
 | Host bundle ID | `com.sunny.dual-subtitle-companion` |
 | Extension bundle ID | `com.sunny.dual-subtitle-companion.extension` |
-| Marketing version | `1.1.1` |
-| Build number | `20260814` |
-| macOS deployment target | `13.0` |
+| Marketing version | `1.1.2` |
+| Build number | `20260820` |
+| macOS deployment target | `26.0` |
 | Application category | `public.app-category.utilities` |
 | Signing | Automatic, team `WX793X49GJ` |
 | App Sandbox | Enabled for host and extension |
@@ -405,9 +405,9 @@ The source was verified with Xcode 26.6, Swift 6.3.3, and the macOS 26.5 SDK. Th
 | Frames | Top frame only |
 | Web-accessible resource | `page-bridge.js` |
 | Toolbar popup | `popup.html` |
-| Manifest version field | `1.1.1` |
+| Manifest version field | `1.1.2` |
 
-The manifest `version` and the Xcode marketing version are both `1.1.1`. This synchronization is currently maintained manually; no build step enforces it.
+The manifest `version` and both Xcode target marketing versions are `1.1.2`. The release script enforces this consistency before archiving.
 
 ### Release configuration
 
@@ -533,9 +533,8 @@ These scenarios are not automated. Successful behavior on one title, account, re
 - No automated tests protect parsing, language matching, state ordering, or restoration behavior.
 - GitHub releases have no automatic update mechanism.
 - Older Xcode versions and older/newer Safari implementations are unverified.
-- `build-notarized-dmg.sh` currently archives and exports the app, builds a DMG, notarizes the DMG, and staples only the DMG. It does not automate the separate app ZIP notarization, app stapling, `syspolicy_check distribution`, final DMG remount verification, or remote-download hash check used for the published `v1.1.1` release.
-
-The published `v1.1.1` DMG was manually corrected and verified with both the app and DMG notarization tickets. That successful artifact does not make the current script fully reproducible.
+- `build-notarized-dmg.sh` validates source versions, deployment targets, and bundle identifiers; archives and exports with Developer ID signing; checks the app for notarization readiness; submits the app ZIP; staples and validates the app; builds, notarizes, and staples the DMG; remounts the DMG; and revalidates the contained app, architectures, forbidden files, Gatekeeper policy, and SHA-256.
+- GitHub asset upload and remote digest comparison remain separate publication steps because they operate on external release state.
 
 ## 14. Design decisions
 
@@ -571,8 +570,8 @@ The following are extension points and recommendations, not implemented commitme
 2. **Session lifecycle:** detect route and player-session replacement, reset capture flags, and dispose obsolete polling loops.
 3. **Synthetic tests:** add unit tests for WebVTT/TTML/JSON parsing, language selection, cue search, revision ordering, and restoration using synthetic fixtures only—never captured service content.
 4. **Safe diagnostics:** expose coarse, non-content-bearing stages such as player unavailable, track missing, capture timeout, and restoration failure without logging subtitle text or response URLs with queries.
-5. **Release automation:** update the script to notarize and staple the app before building and notarizing the DMG, then run distribution, bundle-ID, architecture, forbidden-file, checksum, and downloaded-asset verification.
-6. **Version consistency:** add a release check that validates the Xcode marketing version, extension bundle version, and Manifest V3 version before archive.
+5. **Release automation:** keep the App and DMG notarization workflow aligned with current Apple tooling, and retain remote-download digest verification as a publication gate.
+6. **Version consistency:** keep the Xcode marketing versions, extension bundle version, and Manifest V3 version synchronized; the release script rejects mismatches before archive.
 7. **Capability discipline:** keep host permissions narrow, avoid persistent subtitle storage, and require explicit review before adding any backend, telemetry, export, translation, or new-site support.
 
 Any future feature must keep completed behavior, experimental compatibility logic, and planned work clearly separated in code and documentation.
