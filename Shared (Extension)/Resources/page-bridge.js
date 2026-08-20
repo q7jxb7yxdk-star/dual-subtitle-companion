@@ -15,6 +15,8 @@
     let dualSubtitlesEnabled = false;
     let savedNativeTrack = null;
     let savedNativeTrackId = "";
+    let savedNativeVisibility = null;
+    let nativeVisibilityCaptured = false;
     let enabledRevision = 0;
     let nativeOperation = Promise.resolve();
     const post = (message) => window.postMessage({ source: PAGE_SOURCE, ...message }, location.origin);
@@ -101,7 +103,7 @@
         const list = Array.isArray(value) ? value : (value && typeof value[Symbol.iterator] === "function" ? Array.from(value) : []);
         return list.slice(0, 100).map((track) => {
             const result = {};
-            for (const key of ["id", "trackId", "type", "trackType", "rawTrackType", "kind", "language", "languageCode", "bcp47", "locale", "label", "displayName", "isNoneTrack", "isForcedNarrative", "isImageBased"]) {
+            for (const key of ["id", "trackId", "type", "trackType", "rawTrackType", "kind", "language", "languageCode", "bcp47", "locale", "label", "displayName", "isNoneTrack", "isForcedNarrative", "isImageBased", "isNative", "isOriginal", "original"]) {
                 const item = track?.[key];
                 if (["string", "number", "boolean"].includes(typeof item)) result[key] = item;
             }
@@ -178,6 +180,53 @@
         await Promise.resolve(player[method](track));
     }
 
+    function currentTimedTextVisibility(player) {
+        for (const name of ["getTimedTextVisibility", "isTimedTextVisible"]) {
+            if (typeof player?.[name] !== "function") continue;
+            const value = player[name]();
+            if (typeof value === "boolean") return value;
+        }
+        return null;
+    }
+
+    function timedTextVisibilitySetter(player) {
+        return ["setTimedTextVisibility", "setTimedTextVisible"]
+            .find((name) => typeof player?.[name] === "function") || null;
+    }
+
+    async function setTimedTextVisibility(player, visible) {
+        const method = timedTextVisibilitySetter(player);
+        if (!method) throw new Error("The player exposes no timed-text visibility setter");
+        await Promise.resolve(player[method](visible));
+    }
+
+    async function waitForTimedTextVisibility(player, target, timeout = 2500) {
+        const deadline = performance.now() + timeout;
+        while (performance.now() < deadline) {
+            const current = currentTimedTextVisibility(player);
+            if (current === target) return current;
+            if (current === null) return null;
+            await new Promise((resolve) => setTimeout(resolve, 100));
+        }
+        throw new Error(`Player did not make timed text ${target ? "visible" : "hidden"}`);
+    }
+
+    function saveNativeSubtitleState(player) {
+        const current = currentTimedTextTrack(player);
+        if (current && !current.isNoneTrack) {
+            savedNativeTrack = current;
+            savedNativeTrackId = current.trackId || "";
+            post({ type: "native-track-saved", track: trackSummary(current) });
+        }
+        if (!nativeVisibilityCaptured) {
+            const visibility = currentTimedTextVisibility(player);
+            if (typeof visibility === "boolean") {
+                savedNativeVisibility = visibility;
+                nativeVisibilityCaptured = true;
+            }
+        }
+    }
+
     async function waitForSelectedTrack(player, target, timeout = 2500) {
         const deadline = performance.now() + timeout;
         while (performance.now() < deadline) {
@@ -193,14 +242,16 @@
         try {
             if (!dualSubtitlesEnabled) throw new Error("Dual subtitles are disabled");
             const { player, tracks } = await waitForPlayerAndTracks();
+            saveNativeSubtitleState(player);
+            if (timedTextVisibilitySetter(player)) {
+                await setTimedTextVisibility(player, false);
+                await waitForTimedTextVisibility(player, false);
+                if (!dualSubtitlesEnabled) throw new Error("Dual subtitles were disabled during the operation");
+                post({ type: "native-subtitles", status: "disabled", track: trackSummary(currentTimedTextTrack(player)) });
+                return;
+            }
             const noneTrack = tracks.find((track) => track?.isNoneTrack);
             if (!noneTrack) throw new Error("The None subtitle track is unavailable");
-            const current = currentTimedTextTrack(player);
-            if (current && !current.isNoneTrack) {
-                savedNativeTrack = current;
-                savedNativeTrackId = current.trackId || "";
-                post({ type: "native-track-saved", track: trackSummary(current) });
-            }
             await setTimedTextTrack(player, noneTrack);
             const deadline = performance.now() + 2500;
             while (performance.now() < deadline) {
@@ -224,10 +275,18 @@
             const targetId = savedNativeTrackId || savedNativeTrack?.trackId || "";
             let target = tracks.find((track) => track?.trackId && track.trackId === targetId) || savedNativeTrack;
             if (!target || target.isNoneTrack) target = selectTrack(tracks, isTraditionalChinese) || selectTrack(tracks, isEnglish);
-            if (!target || target.isNoneTrack) throw new Error("No restorable subtitle track is available");
-            await setTimedTextTrack(player, target);
-            const selected = await waitForSelectedTrack(player, target);
-            if (selected?.isNoneTrack) throw new Error("The player remained on the None subtitle track");
+            const canRestoreVisibility = nativeVisibilityCaptured && typeof savedNativeVisibility === "boolean" && timedTextVisibilitySetter(player);
+            if ((!target || target.isNoneTrack) && !canRestoreVisibility) throw new Error("No restorable subtitle track is available");
+            let selected = currentTimedTextTrack(player);
+            if (target && !target.isNoneTrack) {
+                await setTimedTextTrack(player, target);
+                selected = await waitForSelectedTrack(player, target);
+                if (selected?.isNoneTrack) throw new Error("The player remained on the None subtitle track");
+            }
+            if (canRestoreVisibility) {
+                await setTimedTextVisibility(player, savedNativeVisibility);
+                await waitForTimedTextVisibility(player, savedNativeVisibility);
+            }
             post({ type: "native-subtitles", status: "restored", track: trackSummary(selected) });
         } catch (error) {
             post({ type: "native-subtitles", status: "restore-failed", message: error.message });
@@ -304,6 +363,7 @@
             const traditionalChinese = selectTrack(tracks, isTraditionalChinese);
             if (!english || !traditionalChinese) throw new Error("English and Traditional Chinese tracks are not both available");
             original = currentTimedTextTrack(player) || tracks.find((track) => track?.isNoneTrack) || null;
+            saveNativeSubtitleState(player);
             if (original && !original.isNoneTrack) {
                 savedNativeTrack = original;
                 savedNativeTrackId = original.trackId || "";
@@ -359,6 +419,30 @@
         }
     }
 
+    async function probePlayerAudioTracks() {
+        try {
+            const api = window.netflix?.appContext?.state?.playerApp?.getAPI?.();
+            const videoPlayer = api?.videoPlayer;
+            const sessions = videoPlayer?.getAllPlayerSessionIds?.() || [];
+            if (!sessions.length) {
+                post({ type: "audio-player-probe", status: api ? "API found; no active session" : "API unavailable", tracks: [] });
+                return;
+            }
+            const player = videoPlayer.getVideoPlayerBySessionId?.(sessions[0]);
+            const methods = ["getAudioTrackList", "getAudioTracks"];
+            for (const method of methods) {
+                if (typeof player?.[method] !== "function") continue;
+                const tracks = serializableTracks(await player[method]());
+                post({ type: "audio-player-probe", status: `${method}: ${tracks.length} track(s)`, tracks });
+                return;
+            }
+            const names = player ? Object.getOwnPropertyNames(Object.getPrototypeOf(player)).filter((name) => /audio.*track/i.test(name)).slice(0, 20) : [];
+            post({ type: "audio-player-probe", status: names.length ? `No safe audio list method; related methods: ${names.join(", ")}` : "Player found; audio-track API unavailable", tracks: [] });
+        } catch (error) {
+            post({ type: "audio-player-probe", status: `Probe failed: ${error.message}`, tracks: [] });
+        }
+    }
+
     function scanResources() {
         for (const entry of performance.getEntriesByType("resource")) {
             if (relevant(entry.name, entry.initiatorType)) post({ type: "resource-url", url: entry.name, initiatorType: entry.initiatorType });
@@ -384,7 +468,12 @@
             const revision = Number(data.revision) || 0;
             if (revision < enabledRevision) return;
             enabledRevision = revision;
+            const wasEnabled = dualSubtitlesEnabled;
             dualSubtitlesEnabled = data.enabled === true;
+            if (dualSubtitlesEnabled && !wasEnabled) {
+                savedNativeVisibility = null;
+                nativeVisibilityCaptured = false;
+            }
             if (typeof data.savedNativeTrackId === "string" && data.savedNativeTrackId) savedNativeTrackId = data.savedNativeTrackId;
             if (!dualSubtitlesEnabled) nativeOperation = nativeOperation.then(() => restoreNativeSubtitles());
             return;
@@ -410,6 +499,10 @@
 
     scanResources();
     void probePlayerTracks();
-    setInterval(() => void probePlayerTracks(), 5000);
+    void probePlayerAudioTracks();
+    setInterval(() => {
+        void probePlayerTracks();
+        void probePlayerAudioTracks();
+    }, 5000);
     post({ type: "ready" });
 })();

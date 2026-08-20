@@ -11,6 +11,8 @@
     const NATIVE_TRACK_STORAGE_KEY = "nativeSubtitleTrackId";
     const MAX_CONTROLLED_PROBE_ATTEMPTS = 3;
     const CONTROLLED_PROBE_RETRY_DELAY = 2000;
+    const MAX_NATIVE_SUBTITLE_DISABLE_ATTEMPTS = 3;
+    const NATIVE_SUBTITLE_RETRY_DELAY = 1500;
     const state = {
         bridgeActive: false,
         tracks: [],
@@ -21,11 +23,15 @@
         controlledProbeAttempts: 0,
         controlledProbeRetryTimer: null,
         nativeSubtitleDisableRequested: false,
+        nativeSubtitleDisableAttempts: 0,
+        nativeSubtitleRetryTimer: null,
         nativeSubtitleState: "unknown",
         dualSubtitlesEnabled: false,
         enabledRevision: 0,
         enabledSettingLoaded: false,
-        savedNativeTrackId: ""
+        savedNativeTrackId: "",
+        originalAudioEligibility: "unknown",
+        pageBridgeEffectiveEnabled: null
     };
 
     function clearControlledProbeRetry() {
@@ -35,10 +41,13 @@
 
     function resetControlledProbeCycle() {
         clearControlledProbeRetry();
+        if (state.nativeSubtitleRetryTimer !== null) clearTimeout(state.nativeSubtitleRetryTimer);
+        state.nativeSubtitleRetryTimer = null;
         state.controlledProbeRequested = false;
         state.controlledProbeRestored = false;
         state.controlledProbeAttempts = 0;
         state.nativeSubtitleDisableRequested = false;
+        state.nativeSubtitleDisableAttempts = 0;
     }
 
     function fetchableTrackURL(value) {
@@ -69,25 +78,32 @@
         state.dualSubtitlesEnabled = nextEnabled;
         state.enabledRevision = Math.max(state.enabledRevision, nextRevision);
         state.enabledSettingLoaded = true;
-        if (nextEnabled && !wasEnabled) resetControlledProbeCycle();
+        if (nextEnabled !== wasEnabled) resetControlledProbeCycle();
         applyEnabledState();
         return true;
     }
 
     function applyEnabledState() {
-        window.DualSubtitleRenderer.setEnabled(state.dualSubtitlesEnabled);
-        window.postMessage({
-            source: EXTENSION_SOURCE,
-            type: "set-dual-subtitles-enabled",
-            enabled: state.dualSubtitlesEnabled,
-            revision: state.enabledRevision,
-            savedNativeTrackId: state.savedNativeTrackId
-        }, location.origin);
-        if (state.dualSubtitlesEnabled) {
+        const activationRequested = state.dualSubtitlesEnabled && state.originalAudioEligibility === "english";
+        const rendererEnabled = activationRequested && state.nativeSubtitleState === "disabled";
+        window.DualSubtitleRenderer.setEnabled(rendererEnabled);
+        if (!state.dualSubtitlesEnabled || state.originalAudioEligibility !== "unknown" || state.pageBridgeEffectiveEnabled === true) {
+            window.postMessage({
+                source: EXTENSION_SOURCE,
+                type: "set-dual-subtitles-enabled",
+                enabled: activationRequested,
+                revision: state.enabledRevision,
+                savedNativeTrackId: state.savedNativeTrackId
+            }, location.origin);
+            state.pageBridgeEffectiveEnabled = activationRequested;
+        }
+        if (activationRequested) {
             maybeStartControlledProbe();
             reconcileControlledProbe();
         } else {
             clearControlledProbeRetry();
+            if (state.nativeSubtitleRetryTimer !== null) clearTimeout(state.nativeSubtitleRetryTimer);
+            state.nativeSubtitleRetryTimer = null;
             state.nativeSubtitleDisableRequested = false;
             state.controlledProbeRequested = false;
         }
@@ -141,15 +157,35 @@
     }
 
     function reconcileControlledProbe() {
-        if (!state.dualSubtitlesEnabled || !state.controlledProbeRestored) return;
-        if (state.english?.cues?.length && state.traditionalChinese?.cues?.length && !state.nativeSubtitleDisableRequested) {
+        if (!state.dualSubtitlesEnabled || state.originalAudioEligibility !== "english" || !state.controlledProbeRestored) return;
+        if (state.english?.cues?.length && state.traditionalChinese?.cues?.length && state.nativeSubtitleState !== "disabled" && !state.nativeSubtitleDisableRequested && state.nativeSubtitleDisableAttempts < MAX_NATIVE_SUBTITLE_DISABLE_ATTEMPTS) {
             state.nativeSubtitleDisableRequested = true;
+            state.nativeSubtitleDisableAttempts += 1;
             window.postMessage({ source: EXTENSION_SOURCE, type: "disable-native-subtitles" }, location.origin);
         }
     }
 
+    function canRetryNativeSubtitleDisable() {
+        return state.dualSubtitlesEnabled
+            && state.originalAudioEligibility === "english"
+            && state.controlledProbeRestored
+            && state.english?.cues?.length
+            && state.traditionalChinese?.cues?.length
+            && state.nativeSubtitleDisableAttempts < MAX_NATIVE_SUBTITLE_DISABLE_ATTEMPTS;
+    }
+
+    function scheduleNativeSubtitleDisableRetry() {
+        if (!canRetryNativeSubtitleDisable()) return false;
+        if (state.nativeSubtitleRetryTimer !== null) clearTimeout(state.nativeSubtitleRetryTimer);
+        state.nativeSubtitleRetryTimer = setTimeout(() => {
+            state.nativeSubtitleRetryTimer = null;
+            reconcileControlledProbe();
+        }, NATIVE_SUBTITLE_RETRY_DELAY);
+        return true;
+    }
+
     function maybeStartControlledProbe() {
-        if (!state.enabledSettingLoaded || !state.dualSubtitlesEnabled || state.controlledProbeRequested || state.controlledProbeAttempts >= MAX_CONTROLLED_PROBE_ATTEMPTS || !state.bridgeActive || !state.english || !state.traditionalChinese) return;
+        if (!state.enabledSettingLoaded || !state.dualSubtitlesEnabled || state.originalAudioEligibility !== "english" || state.controlledProbeRequested || state.controlledProbeAttempts >= MAX_CONTROLLED_PROBE_ATTEMPTS || !state.bridgeActive || !state.english || !state.traditionalChinese) return;
         clearControlledProbeRetry();
         state.controlledProbeRequested = true;
         state.controlledProbeRestored = false;
@@ -158,13 +194,40 @@
     }
 
     function scheduleControlledProbeRetry() {
-        if (!state.dualSubtitlesEnabled || (state.english?.cues?.length && state.traditionalChinese?.cues?.length) || state.controlledProbeAttempts >= MAX_CONTROLLED_PROBE_ATTEMPTS) return;
+        if (!state.dualSubtitlesEnabled || state.originalAudioEligibility !== "english" || (state.english?.cues?.length && state.traditionalChinese?.cues?.length) || state.controlledProbeAttempts >= MAX_CONTROLLED_PROBE_ATTEMPTS) return;
         clearControlledProbeRetry();
         state.controlledProbeRetryTimer = setTimeout(() => {
             state.controlledProbeRetryTimer = null;
             state.controlledProbeRequested = false;
             maybeStartControlledProbe();
         }, CONTROLLED_PROBE_RETRY_DELAY);
+    }
+
+    function audioLanguageText(track) {
+        return [track?.language, track?.languageCode, track?.bcp47, track?.locale, track?.label, track?.displayName]
+            .filter(Boolean).join(" ").toLowerCase();
+    }
+
+    function isEnglishAudio(track) {
+        const value = audioLanguageText(track);
+        return /(^|[\s_-])en(?:[\s_-]|$)/.test(value) || /\benglish\b/.test(value);
+    }
+
+    function isExplicitOriginalAudio(track) {
+        return track?.isNative === true || track?.isOriginal === true || track?.original === true;
+    }
+
+    function updateOriginalAudioEligibility(tracks) {
+        if (!Array.isArray(tracks) || !tracks.length) return;
+        const originalTracks = tracks.filter(isExplicitOriginalAudio);
+        const nextEligibility = !originalTracks.length
+            ? "unknown"
+            : (originalTracks.some(isEnglishAudio) ? "english" : "non-english");
+        if (nextEligibility === state.originalAudioEligibility) return;
+        state.originalAudioEligibility = nextEligibility;
+        resetControlledProbeCycle();
+        applyEnabledState();
+        settleEligibilityWaiters();
     }
 
     window.addEventListener("message", (event) => {
@@ -182,6 +245,8 @@
             if (Array.isArray(payload.tracks) && payload.tracks.length) {
                 applyDetectorResult(window.DualSubtitleDetector.ingestPlayerTracks(payload.tracks));
             }
+        } else if (payload.type === "audio-player-probe") {
+            updateOriginalAudioEligibility(payload.tracks);
         } else if (payload.type === "controlled-probe") {
             if (payload.phase === "restored") {
                 state.controlledProbeRestored = true;
@@ -201,7 +266,18 @@
             }
             reconcileControlledProbe();
         } else if (payload.type === "native-subtitles") {
+            if (payload.status === "failed") {
+                state.nativeSubtitleState = "unknown";
+                state.nativeSubtitleDisableRequested = false;
+                window.DualSubtitleRenderer.setEnabled(false);
+                if (scheduleNativeSubtitleDisableRetry()) return;
+            }
+            if (payload.status === "disabled" && state.nativeSubtitleRetryTimer !== null) {
+                clearTimeout(state.nativeSubtitleRetryTimer);
+                state.nativeSubtitleRetryTimer = null;
+            }
             settleToggleWaiters(payload);
+            applyEnabledState();
         } else if (payload.type === "native-track-saved" && payload.track?.trackId) {
             state.savedNativeTrackId = payload.track.trackId;
             void browser.storage.local.set({ [NATIVE_TRACK_STORAGE_KEY]: state.savedNativeTrackId });
@@ -261,6 +337,16 @@
         }
     }
 
+    function settleEligibilityWaiters() {
+        if (state.originalAudioEligibility === "unknown") return;
+        for (const waiter of [...toggleWaiters]) {
+            if (!waiter.enabled || state.originalAudioEligibility === "english") continue;
+            clearTimeout(waiter.timer);
+            toggleWaiters.splice(toggleWaiters.indexOf(waiter), 1);
+            waiter.resolve({ ok: false, enabled: true, error: "此影片不是英語原聲，已保留網站原生字幕" });
+        }
+    }
+
     function toggleAlreadySatisfied(enabled) {
         return enabled ? state.nativeSubtitleState === "disabled" : state.nativeSubtitleState === "restored";
     }
@@ -270,6 +356,9 @@
         if (message?.type !== "set-dual-subtitles-enabled") return undefined;
         const revision = Number(message.revision) || Date.now();
         setEnabledState(message.enabled === true, revision);
+        if (message.enabled === true && state.originalAudioEligibility === "non-english") {
+            return Promise.resolve({ ok: false, enabled: true, error: "此影片不是英語原聲，已保留網站原生字幕" });
+        }
         if (toggleAlreadySatisfied(message.enabled === true)) {
             return Promise.resolve({ ok: true, enabled: message.enabled === true, error: null });
         }
