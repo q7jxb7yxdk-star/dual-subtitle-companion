@@ -65,7 +65,7 @@ submit_for_notarization() {
     local submission_path="$1"
     local result_path="$2"
     local label="$3"
-    local status
+    local notary_status
 
     if ! xcrun notarytool submit "$submission_path" \
         --keychain-profile "$NOTARY_PROFILE" \
@@ -76,8 +76,8 @@ submit_for_notarization() {
     fi
 
     /bin/cat "$result_path"
-    status="$(plutil -extract status raw -o - "$result_path")"
-    assert_equal "$status" "Accepted" "$label notarization status"
+    notary_status="$(plutil -extract status raw -o - "$result_path")"
+    assert_equal "$notary_status" "Accepted" "$label notarization status"
 }
 
 verify_app() {
