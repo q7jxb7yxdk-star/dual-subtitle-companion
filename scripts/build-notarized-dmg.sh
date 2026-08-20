@@ -149,8 +149,9 @@ verify_app() {
     fi
 }
 
-if ! security find-identity -v -p codesigning \
-    | grep '"Developer ID Application:.*(WX793X49GJ)"' >/dev/null; then
+DEVELOPER_ID_IDENTITY="$(security find-identity -v -p codesigning \
+    | awk -F '"' '/Developer ID Application:.*\(WX793X49GJ\)/ { print $2; exit }')"
+if [[ -z "$DEVELOPER_ID_IDENTITY" ]]; then
     fail "No Developer ID Application identity for team $EXPECTED_TEAM_ID is installed."
 fi
 
@@ -233,9 +234,17 @@ hdiutil create \
     -format UDZO \
     "$DMG_PATH"
 
+codesign --force --sign "$DEVELOPER_ID_IDENTITY" --timestamp "$DMG_PATH"
+codesign --verify --strict --verbose=2 "$DMG_PATH"
+DMG_SIGNING_DETAILS="$(codesign -dvvv "$DMG_PATH" 2>&1)"
+assert_equal "$(print -r -- "$DMG_SIGNING_DETAILS" | awk -F= '/^TeamIdentifier=/ { print $2; exit }')" "$EXPECTED_TEAM_ID" "DMG signing team"
+[[ "$DMG_SIGNING_DETAILS" == *"Authority=Developer ID Application:"* ]] || fail "DMG is not signed with a Developer ID Application certificate."
+[[ "$DMG_SIGNING_DETAILS" == *$'\nTimestamp='* ]] || fail "DMG signature has no secure timestamp."
+
 submit_for_notarization "$DMG_PATH" "$DMG_NOTARY_RESULT" "DMG"
 xcrun stapler staple "$DMG_PATH"
 xcrun stapler validate "$DMG_PATH"
+codesign --verify --strict --verbose=2 "$DMG_PATH"
 spctl --assess --type open --context context:primary-signature --verbose=2 "$DMG_PATH"
 
 mkdir -p "$MOUNT_DIR"

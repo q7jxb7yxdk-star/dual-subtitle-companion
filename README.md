@@ -142,7 +142,7 @@ node --check "Shared (App)/Resources/Script.js"
 
 The repository has no configured formatter, linter, automated test target, or CI workflow. Runtime validation is manual and requires a supported playback title.
 
-The `scripts/build-notarized-dmg.sh` workflow validates version and bundle metadata, creates a Developer ID archive, notarizes and staples the exported app, builds the DMG from that stapled app, notarizes and staples the DMG, remounts it, and verifies the contained app before producing a SHA-256 checksum.
+The `scripts/build-notarized-dmg.sh` workflow validates version and bundle metadata, creates a Developer ID archive, notarizes and staples the exported app, builds and Developer ID-signs the DMG from that stapled app, notarizes and staples the DMG, remounts it, and verifies the contained app before producing a SHA-256 checksum.
 
 ## Known limitations
 

@@ -533,7 +533,7 @@ These scenarios are not automated. Successful behavior on one title, account, re
 - No automated tests protect parsing, language matching, state ordering, or restoration behavior.
 - GitHub releases have no automatic update mechanism.
 - Older Xcode versions and older/newer Safari implementations are unverified.
-- `build-notarized-dmg.sh` validates source versions, deployment targets, and bundle identifiers; archives and exports with Developer ID signing; checks all architectures, signing authorities, secure timestamps, and sealed resources; submits the app ZIP; staples and validates the app with `syspolicy_check distribution`; builds, notarizes, and staples the DMG; remounts the DMG; and revalidates the contained app, forbidden files, Gatekeeper policy, and SHA-256.
+- `build-notarized-dmg.sh` validates source versions, deployment targets, and bundle identifiers; archives and exports with Developer ID signing; checks all architectures, signing authorities, secure timestamps, and sealed resources; submits the app ZIP; staples and validates the app with `syspolicy_check distribution`; builds and Developer ID-signs the DMG before notarizing and stapling it; remounts the DMG; and revalidates the contained app, forbidden files, Gatekeeper policy, and SHA-256.
 - GitHub asset upload and remote digest comparison remain separate publication steps because they operate on external release state.
 
 ## 14. Design decisions
