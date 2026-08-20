@@ -89,13 +89,15 @@ verify_app() {
     local extension_executable
     local forbidden_files
     local resource
+    local host_signing_details
+    local extension_signing_details
 
     [[ -d "$app_path" ]] || fail "Expected app is missing: $app_path"
     [[ -d "$extension_path" ]] || fail "Embedded extension is missing: $extension_path"
     [[ -f "$manifest_path" ]] || fail "Bundled manifest is missing: $manifest_path"
 
-    codesign --verify --deep --strict --verbose=2 "$app_path"
-    codesign --verify --strict --verbose=2 "$extension_path"
+    codesign --verify --deep --strict --all-architectures --verbose=2 "$app_path"
+    codesign --verify --strict --all-architectures --verbose=2 "$extension_path"
 
     assert_equal "$(plist_value "$app_path/Contents/Info.plist" CFBundleIdentifier)" "$EXPECTED_HOST_BUNDLE_ID" "Host bundle identifier"
     assert_equal "$(plist_value "$extension_path/Contents/Info.plist" CFBundleIdentifier)" "$EXPECTED_EXTENSION_BUNDLE_ID" "Extension bundle identifier"
@@ -105,8 +107,14 @@ verify_app() {
     assert_equal "$(plist_value "$extension_path/Contents/Info.plist" CFBundleVersion)" "$BUILD_NUMBER" "Extension build number"
     assert_equal "$(plutil -extract version raw -o - "$manifest_path")" "$VERSION" "Bundled manifest version"
 
-    assert_equal "$(codesign -dv --verbose=4 "$app_path" 2>&1 | awk -F= '/^TeamIdentifier=/ { print $2; exit }')" "$EXPECTED_TEAM_ID" "Host signing team"
-    assert_equal "$(codesign -dv --verbose=4 "$extension_path" 2>&1 | awk -F= '/^TeamIdentifier=/ { print $2; exit }')" "$EXPECTED_TEAM_ID" "Extension signing team"
+    host_signing_details="$(codesign -dvvv "$app_path" 2>&1)"
+    extension_signing_details="$(codesign -dvvv "$extension_path" 2>&1)"
+    assert_equal "$(print -r -- "$host_signing_details" | awk -F= '/^TeamIdentifier=/ { print $2; exit }')" "$EXPECTED_TEAM_ID" "Host signing team"
+    assert_equal "$(print -r -- "$extension_signing_details" | awk -F= '/^TeamIdentifier=/ { print $2; exit }')" "$EXPECTED_TEAM_ID" "Extension signing team"
+    [[ "$host_signing_details" == *"Authority=Developer ID Application:"* ]] || fail "Host is not signed with a Developer ID Application certificate."
+    [[ "$extension_signing_details" == *"Authority=Developer ID Application:"* ]] || fail "Extension is not signed with a Developer ID Application certificate."
+    [[ "$host_signing_details" == *$'\nTimestamp='* ]] || fail "Host signature has no secure timestamp."
+    [[ "$extension_signing_details" == *$'\nTimestamp='* ]] || fail "Extension signature has no secure timestamp."
 
     host_executable="$app_path/Contents/MacOS/$(plist_value "$app_path/Contents/Info.plist" CFBundleExecutable)"
     extension_executable="$extension_path/Contents/MacOS/$(plist_value "$extension_path/Contents/Info.plist" CFBundleExecutable)"
@@ -209,7 +217,6 @@ xcodebuild -exportArchive \
 
 APP_PATH="$EXPORT_DIR/Dual Subtitle Companion.app"
 verify_app "$APP_PATH" no
-syspolicy_check notary-submission "$APP_PATH" --verbose
 
 ditto -c -k --keepParent "$APP_PATH" "$APP_ZIP_PATH"
 submit_for_notarization "$APP_ZIP_PATH" "$APP_NOTARY_RESULT" "App"
