@@ -46,7 +46,7 @@ There are no npm packages, Swift Packages, CocoaPods, Python packages, environme
 
 ### Install a signed release
 
-The latest published binary is available from [GitHub Releases](https://github.com/q7jxb7yxdk-star/dual-subtitle-companion/releases). Release `v1.1.2` is distributed as a Developer ID-signed and Apple-notarized Universal DMG.
+The latest published binary is available from [GitHub Releases](https://github.com/q7jxb7yxdk-star/dual-subtitle-companion/releases). Release `v1.1.3` is distributed as a Developer ID-signed and Apple-notarized Universal DMG.
 
 1. Download `Dual-Subtitle-Companion-<version>.dmg`.
 2. Open the DMG and drag **Dual Subtitle Companion** to **Applications**.

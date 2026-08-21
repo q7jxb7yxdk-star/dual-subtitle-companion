@@ -381,8 +381,8 @@ The extension depends on a private, undocumented playback-page object and the ti
 | --- | --- |
 | Host bundle ID | `com.sunny.dual-subtitle-companion` |
 | Extension bundle ID | `com.sunny.dual-subtitle-companion.extension` |
-| Marketing version | `1.1.2` |
-| Build number | `20260820` |
+| Marketing version | `1.1.3` |
+| Build number | `20260821` |
 | macOS deployment target | `26.0` |
 | Application category | `public.app-category.utilities` |
 | Signing | Automatic, team `WX793X49GJ` |
@@ -405,9 +405,9 @@ The source was verified with Xcode 26.6, Swift 6.3.3, and the macOS 26.5 SDK. Th
 | Frames | Top frame only |
 | Web-accessible resource | `page-bridge.js` |
 | Toolbar popup | `popup.html` |
-| Manifest version field | `1.1.2` |
+| Manifest version field | `1.1.3` |
 
-The manifest `version` and both Xcode target marketing versions are `1.1.2`. The release script enforces this consistency before archiving.
+The manifest `version` and both Xcode target marketing versions are `1.1.3`. The release script enforces this consistency before archiving.
 
 ### Release configuration
 
